@@ -5,12 +5,15 @@ import 'dart:svg';
 DivElement output;
 Random random;
 SvgSvgElement svg;
+bool isGreyscale;
 
 final int WIDTH = 800;
 final int HEIGHT = 600;
 void main() {
   output = document.querySelector("#output");
+
   random = new Random();
+  isGreyscale = random.nextBool();
 
   svg = new SvgSvgElement();
   svg.setAttribute("width", "$WIDTH");
@@ -22,9 +25,14 @@ void main() {
 //for simplicity it's all grayscale.
 String getRandomColor() {
   String ret = "";
-  int myShade = random.nextInt(256);
-  ret = "rgb($myShade, $myShade, $myShade)";
+  if(isGreyscale) {
+    int myShade = random.nextInt(256);
+    ret = "rgb($myShade, $myShade, $myShade)";
+  } else {
+    ret = "hsl(${random.nextInt(361)}, ${random.nextInt(101)}%, ${random.nextInt(100)}%)";
+  }
   return ret;
+
 }
 
 void doThingsToSvg() {
@@ -60,11 +68,11 @@ void drawTriangle() {
   int startX = random.nextInt(WIDTH);
   int startY = random.nextInt(HEIGHT);
 
-  int nextX = startX - 50 + random.nextInt(100);
-  int nextY = startY - 50 + random.nextInt(100);
+  int nextX = startX - 100 + random.nextInt(200);
+  int nextY = startY - 100 + random.nextInt(200);
 
-  int endX = nextX - 50 + random.nextInt(60);
-  int endY = nextY - 50 + random.nextInt(60);
+  int endX = nextX - 100 + random.nextInt(200);
+  int endY = nextY - 100 + random.nextInt(200);
 
   String color = getRandomColor();
   triangle.setAttribute("stroke", color);
@@ -79,8 +87,8 @@ void drawLine() {
   int startX = random.nextInt(WIDTH);
   int startY = random.nextInt(HEIGHT);
 
-  int nextX = startX - 50 + random.nextInt(100);
-  int nextY = startY - 50 + random.nextInt(100);
+  int nextX = startX - 100 + random.nextInt(200);
+  int nextY = startY - 100 + random.nextInt(200);
 
 
   String color = getRandomColor();
