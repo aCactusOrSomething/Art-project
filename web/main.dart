@@ -13,8 +13,8 @@ void main() {
   random = new Random();
 
   svg = new SvgSvgElement();
-  svg.style.width = "$WIDTH";
-  svg.style.height = "$HEIGHT";
+  svg.setAttribute("width", "$WIDTH");
+  svg.setAttribute("height", "$HEIGHT");
   doThingsToSvg();
   output.append(svg);
 }
