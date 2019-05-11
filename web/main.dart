@@ -1,6 +1,9 @@
 import 'dart:html';
 import 'dart:math';
 import 'dart:svg';
+import 'dart:async';
+
+import 'package:DollLibCorrect/DollRenderer.dart';
 
 DivElement output;
 Random random;
@@ -18,6 +21,10 @@ void main() {
   svg = new SvgSvgElement();
   svg.setAttribute("width", "$WIDTH");
   svg.setAttribute("height", "$HEIGHT");
+  /*svg.style.position = "absolute";
+  svg.style.top = "0";
+  svg.style.right = "0";
+  svg.style.zIndex = "0";*/
   doThingsToSvg();
   output.append(svg);
 }
@@ -39,7 +46,7 @@ void doThingsToSvg() {
   svg.style.backgroundColor = getRandomColor();
   int numElements = random.nextInt(50) + 25;
   for(int i = 0; i < numElements; i++) {
-    int type = random.nextInt(3);
+    int type = random.nextInt(4);
     if(type == 0) {
       drawCircle();
     }
@@ -48,6 +55,9 @@ void doThingsToSvg() {
     }
     if(type == 2) {
       drawLine();
+    }
+    if(type == 3) {
+      drawDoll();
     }
   }
 }
@@ -98,4 +108,17 @@ void drawLine() {
 
   line.setAttribute("points", "$startX,$startY $nextX,$nextY");
   svg.append(line);
+}
+
+void drawDoll() async{
+  Doll doll = await(Doll.makeRandomDoll());
+  int startX = random.nextInt(WIDTH);
+  int startY = random.nextInt(HEIGHT);
+  CanvasElement canvas = await(doll.getNewCanvas());
+  /*canvas.style.position = "absolute";
+  canvas.style.top = "$startY";
+  canvas.style.right = "$startX";
+  canvas.style.zIndex = "1";*/
+
+  output.append(canvas);
 }
